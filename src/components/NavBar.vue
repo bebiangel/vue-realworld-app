@@ -3,7 +3,8 @@
         <div class="container">
             <router-link
                     class="navbar-brand"
-                    :to="{name:'home'}">
+                    exact
+                    to="/">
                 conduit
             </router-link>
             <ul class="nav navbar-nav pull-xs-right">
@@ -12,7 +13,7 @@
                             class="nav-link"
                             active-class="active"
                             exact
-                            :to="{name:'home'}"
+                            to="/"
                     >
                         Home
                     </router-link>
@@ -21,8 +22,7 @@
                     <router-link
                             class="nav-link"
                             active-class="active"
-                            exact
-                            :to="{name:'new', path:'/new'}"
+                            to='/new'
                     >
                         <i class="ion-compose"/>&nbsp;New Post
                     </router-link>
@@ -32,8 +32,7 @@
                     <router-link
                             class="nav-link"
                             active-class="active"
-                            exact
-                            :to="{name:'settings', path:'/settings'}"
+                            to='/settings'
                     >
                         <i class="ion-gear-a"/>&nbsp;Settings
                     </router-link>
@@ -42,8 +41,15 @@
                     <router-link
                             class="nav-link"
                             active-class="active"
-                            exact
-                            :to="{name:'signup', path:'/signup'}">
+                            to='/login'>
+                        Login
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link
+                            class="nav-link"
+                            active-class="active"
+                            to='/signup'>
                         Sign up
                     </router-link>
                 </li>
