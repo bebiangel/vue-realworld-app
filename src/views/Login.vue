@@ -10,7 +10,7 @@
                         </router-link>
                     </p>
 
-                    <form v-on:submit.prevent="onLogin(email, password)">
+                    <form v-on:submit.prevent="onLogin()">
                         <fieldset class="form-group">
                             <input class="form-control form-control-lg"
                                    type="text"
@@ -34,24 +34,23 @@
 </template>
 
 <script>
-    export default {
-        name: "Login",
-        data() {
-            return {
-                email: "",
-                password: "",
+    import { Vue, Component } from 'vue-property-decorator';
+    import user from '../store/module/user';
 
-            }
-        },
-        methods: {
-            onLogin(email, password) {
-                this.$http.post('/users/login', {
-                    user: { email, password }
-                })
-                    .then(res => console.log(res));
-            }
+    @Component
+    export default class extends Vue {
+        email = "";
+        password = "";
+
+        onLogin() {
+            user.login({
+                email: this.email,
+                password: this.password
+            });
         }
     }
+
+
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
     email: string;
     token: string;
     username: string;
@@ -6,14 +6,14 @@ export interface User {
     image: string;
 }
 
-export interface Profile {
+export interface IProfile {
     username: string;
     bio: string;
     image: string;
     following: boolean;
 }
 
-export interface Article {
+export interface IArticle {
     slug: string;
     title: string;
     description: string;
@@ -28,10 +28,10 @@ export interface Article {
         bio: string;
         image: string;
         following: boolean;
-    }
+    };
 }
 
-export interface Comment {
+export interface IComment {
     id: number;
     createdAt: string;
     updatedAt: string;
@@ -44,13 +44,46 @@ export interface Comment {
     }
 }
 
-export interface Tags {
+export interface ITags {
     tags: string[];
 }
 
-export interface Status {
+export interface IStatus {
     errors: {
         body: string[];
     }
 
+}
+
+export interface IAuthor {
+    username: string;
+    bio: string;
+    image: string;
+    following: boolean;
+}
+
+export interface IUserForUpdate {
+    email?: string
+    username?: string
+    bio?: string
+    password?: string
+    image?: string
+}
+
+export interface IUserSubmit {
+    email: string;
+    password: string;
+}
+
+export interface IUserResponse {
+    user: IUser;
+}
+
+export interface IProfileResponse {
+    profile: IProfile;
+}
+
+export interface IArticlesResponse {
+    articles?: ( IArticle )[] | null;
+    articlesCount: number;
 }

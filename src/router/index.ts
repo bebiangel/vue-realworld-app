@@ -11,8 +11,13 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/Home.vue'),
         // children: [
         //     {
+        //         path: '',
+        //         name: 'Home',
+        //         component: () => import('@/views/Home.vue')
+        //     },
+        //     {
         //         path: '/:article',
-        //         name: '',
+        //         name: 'Article',
         //         component: () => import('@/views/Article.vue')
         //     },
         //     {
@@ -21,6 +26,11 @@ const routes: Array<RouteConfig> = [
         //         // component:()
         //     }
         // ]
+    },
+    {
+        path: '/articles/:slug',
+        name: 'article',
+        component: () => import('@/views/Article.vue')
     },
     {
         path: '/new',

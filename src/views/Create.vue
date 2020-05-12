@@ -13,10 +13,12 @@
                                 <input type="text" class="form-control" placeholder="What's this article about?">
                             </fieldset>
                             <fieldset class="form-group">
-                                <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)"></textarea>
+                                <textarea class="form-control" rows="8"
+                                          placeholder="Write your article (in markdown)"></textarea>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="text" class="form-control" placeholder="Enter tags"><div class="tag-list"></div>
+                                <input type="text" class="form-control" placeholder="Enter tags">
+                                <div class="tag-list"></div>
                             </fieldset>
                             <button class="btn btn-lg pull-xs-right btn-primary" type="button">
                                 Publish Article
@@ -32,7 +34,20 @@
 
 <script>
     export default {
-        name: "Create"
+        name: "Create",
+        data() {
+            return {
+                title: '',
+                description: '',
+                body: '',
+                tags: '',
+            }
+        },
+        methods: {
+            onSubmit() {
+                const form = new FormData();
+            }
+        }
     }
 </script>
 

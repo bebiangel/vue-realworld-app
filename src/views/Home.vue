@@ -23,30 +23,11 @@
                         </ul>
                     </div>
 
-                    <template v-for="(article) in articles">
-                        <div v-bind:key="article.slug" class="article-preview">
-                            <div class="article-meta">
-                                <a href="profile.html">
-                                    <img v-bind:src="article.author.image"/>
-                                </a>
-                                <div class="info">
-                                    <a href="" class="author">{{article.author.username}}</a>
-                                    <span class="date">January 20th</span>
-                                </div>
-                                <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                                    <i class="ion-heart"></i> {{article.favoritesCount}}
-                                </button>
-                            </div>
-                            <router-link
-                                    class="preview-link"
-                                    to="/:article.slug">
-                                <h1>{{article.title}}</h1>
-                                <p>{{article.description}}</p>
-                                <span>Read more...</span>
-                            </router-link>
-                        </div>
-                    </template>
-
+                    <ArticlePreview
+                            v-for="(article) in articles"
+                            :article="article"
+                            :key="article.slug"
+                    />
                     <TagList/>
 
                 </div>
@@ -58,11 +39,13 @@
 
 <script>
     import TagList from '@/components/TagList';
+    import ArticlePreview from '@/components/ArticlePreview'
 
     export default {
         name: 'Home',
         components: {
-            TagList
+            TagList,
+            ArticlePreview
         },
         data() {
             return {
@@ -81,6 +64,5 @@
         created() {
             return this.getArticles();
         },
-        computed: {}
     }
 </script>

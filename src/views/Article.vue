@@ -4,24 +4,24 @@
         <div class="banner">
             <div class="container">
 
-                <h1>How to build webapps that scale</h1>
+                <h1>{{article.title}}</h1>
 
                 <div class="article-meta">
-                    <a href=""><img src="http://i.imgur.com/Qr71crq.jpg"/></a>
+                    <a href=""><img v-bind:src="article.author.image"/></a>
                     <div class="info">
-                        <a href="" class="author">Eric Simons</a>
+                        <a href="" class="author">{{article.author.username}}</a>
                         <span class="date">January 20th</span>
                     </div>
                     <button class="btn btn-sm btn-outline-secondary">
                         <i class="ion-plus-round"/>
                         &nbsp;
-                        Follow Eric Simons <span class="counter">(10)</span>
+                        Follow {{article.author.username}} <span class="counter">(10)</span>
                     </button>
                     &nbsp;&nbsp;
                     <button class="btn btn-sm btn-outline-primary">
                         <i class="ion-heart"/>
                         &nbsp;
-                        Favorite Post <span class="counter">(29)</span>
+                        Favorite Post <span class="counter">({{ article.favoritesCount }})</span>
                     </button>
                 </div>
 
@@ -32,10 +32,10 @@
             <div class="row article-content">
                 <div class="col-md-12">
                     <p>
-                        Web development technologies have evolved at an incredible clip over the past few years.
+                        {{ article.title }}
                     </p>
-                    <h2 id="introducing-ionic">Introducing RealWorld.</h2>
-                    <p>It's a great solution for learning how other frameworks work.</p>
+                    <h2 id="introducing-ionic">{{article.description}}</h2>
+                    <p>{{article.body}}</p>
                 </div>
             </div>
 
@@ -64,9 +64,7 @@
             </div>
 
             <div class="row">
-
                 <div class="col-xs-12 col-md-8 offset-md-2">
-
                     <form class="card comment-form">
                         <div class="card-block">
                             <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
@@ -78,53 +76,66 @@
                             </button>
                         </div>
                     </form>
-
-                    <div class="card">
-                        <div class="card-block">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="" class="comment-author">
-                                <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img"/>
-                            </a>
-                            &nbsp;
-                            <a href="" class="comment-author">Jacob Schmidt</a>
-                            <span class="date-posted">Dec 29th</span>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-block">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="" class="comment-author">
-                                <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img"/>
-                            </a>
-                            &nbsp;
-                            <a href="" class="comment-author">Jacob Schmidt</a>
-                            <span class="date-posted">Dec 29th</span>
-                            <span class="mod-options">
-              <i class="ion-edit"></i>
-              <i class="ion-trash-a"></i>
-            </span>
-                        </div>
-                    </div>
-
+                    <Comments
+                            v-for="(comment,index) in comments"
+                            :key="index"
+                            :comment="comment"
+                    />
                 </div>
-
             </div>
-
         </div>
 
     </div>
 </template>
 
 <script>
+    import Comments from "../components/Comments";
+
     export default {
-        name: "Article"
+        name: "Article",
+        components: {
+            Comments
+        },
+        data() {
+            return {
+                article: {
+                    author: { username: '', bio: '', following: null, image: '' },
+                    body: '',
+                    created: '',
+                    description: '',
+                    favorited: null,
+                    favoritesCount: 0,
+                    slug: '',
+                    tagList: [],
+                    title: '',
+                    updatedAt: ''
+                },
+                comments: []
+            }
+        },
+        methods: {
+            getArticle() {
+                const { slug } = this.$route.params;
+                this.$http.get(`/articles/${ slug }`)
+                    .then(res => {
+                        console.log(res.data)
+                        this.article = res.data.article;
+                    });
+            },
+            getComments() {
+                const { slug } = this.$route.params;
+                this.$http.get(`/articles/${ slug }/comments`)
+                    .then(res => {
+                        console.log(res.data);
+                        this.comments = res.data.comments;
+                    });
+            }
+        },
+
+        created() {
+            this.getArticle();
+            this.getComments();
+        }
     }
 </script>
 
