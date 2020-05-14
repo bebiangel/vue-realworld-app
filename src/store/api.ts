@@ -6,7 +6,7 @@ import {
     IProfileResponse,
     IArticlesResponse,
     IUserForUpdate,
-    IProfile
+    IProfile, IArticleResponse, IArticle
 } from "@/module/types";
 
 
@@ -44,6 +44,10 @@ export async function getGlobalFeed() {
     return response.data as IArticlesResponse;
 }
 
+export async function fetchArticle(slug: string | number): Promise<IArticleResponse> {
+    const response = await conduitApi.get(`/articles/${ slug }`);
+    return (response.data as IArticleResponse);
+}
 
 export async function updateUser(user: IUserForUpdate): Promise<IUser> {
     const response = await conduitApi.put('/user', user)

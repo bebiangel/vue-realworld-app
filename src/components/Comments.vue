@@ -25,12 +25,6 @@
     export default class Comments extends Vue {
         @Prop() private comment!: IComment;
 
-        // @Prop() private isCurrentUser!: boolean;
-        //
-        // set isCurrentUser(a: any) {
-        //     console.log(a);
-        // }
-
         get isCurrentUser(): boolean {
             console.log(this.comment.author.username);
             return false;

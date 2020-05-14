@@ -9,8 +9,10 @@
                             New account?
                         </router-link>
                     </p>
-
-                    <form v-on:submit.prevent="onLogin()">
+                    <ul class="error-messages" v-if="loginError">
+                        <li>{{ loginError }}</li>
+                    </ul>
+                    <form v-on:submit.prevent="onLogin">
                         <fieldset class="form-group">
                             <input class="form-control form-control-lg"
                                    type="text"
@@ -33,23 +35,35 @@
     </div>
 </template>
 
-<script>
-    import { Vue, Component } from 'vue-property-decorator';
-    import user from '../store/module/user';
+<script lang="ts">
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import AuthModule from '@/store/module/auth'
 
-    @Component
-    export default class extends Vue {
-        email = "";
-        password = "";
+    @Component({})
+    export default class Login extends Vue {
+        //
+        email = '';
+        password = '';
 
-        onLogin() {
-            user.login({
+        private async onLogin() {
+
+            // this.$store
+            //     .dispatch(LOGIN, { email, password })
+            //     .then(() => this.$router.push({ name: "home" }));
+            await AuthModule.login({
                 email: this.email,
                 password: this.password
-            });
+            })
+
+        }
+
+        // ...mapState({
+        //                 errors: state => state.auth.errors
+        //             })
+        get loginError() {
+            return '';
         }
     }
-
 
 </script>
 

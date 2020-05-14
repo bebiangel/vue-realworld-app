@@ -87,3 +87,9 @@ export interface IArticlesResponse {
     articles?: ( IArticle )[] | null;
     articlesCount: number;
 }
+
+
+export interface IArticleResponse {
+    article?: IArticle;
+}
+

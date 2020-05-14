@@ -88,53 +88,37 @@
     </div>
 </template>
 
-<script>
-    import Comments from "../components/Comments";
+<script lang="ts">
+    import Comments from "@/components/Comments.vue";
+    import { Component, Vue } from 'vue-property-decorator';
+    import ArticleModule from "@/store/module/article";
 
-    export default {
-        name: "Article",
-        components: {
-            Comments
-        },
-        data() {
-            return {
-                article: {
-                    author: { username: '', bio: '', following: null, image: '' },
-                    body: '',
-                    created: '',
-                    description: '',
-                    favorited: null,
-                    favoritesCount: 0,
-                    slug: '',
-                    tagList: [],
-                    title: '',
-                    updatedAt: ''
-                },
-                comments: []
-            }
-        },
-        methods: {
-            getArticle() {
-                const { slug } = this.$route.params;
-                this.$http.get(`/articles/${ slug }`)
-                    .then(res => {
-                        console.log(res.data)
-                        this.article = res.data.article;
-                    });
-            },
-            getComments() {
-                const { slug } = this.$route.params;
-                this.$http.get(`/articles/${ slug }/comments`)
-                    .then(res => {
-                        console.log(res.data);
-                        this.comments = res.data.comments;
-                    });
-            }
-        },
+    @Component({
+        components: { Comments }
+    })
+    export default class Article extends Vue {
+        //
+        get article() {
+            return ArticleModule.article;
+        }
+
+        get comments() {
+            return ArticleModule.comments;
+        }
 
         created() {
             this.getArticle();
             this.getComments();
+        }
+
+        async getArticle() {
+            const { slug } = this.$route.params;
+            await ArticleModule.getArticle(slug);
+        }
+
+        async getComments() {
+            const { slug } = this.$route.params;
+            await ArticleModule.getComments(slug);
         }
     }
 </script>

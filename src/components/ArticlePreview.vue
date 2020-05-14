@@ -15,7 +15,7 @@
         <router-link
                 class="preview-link"
                 v-bind:to="{path:'articles/' + this.slug}">
-            <h1>{{article.title}}</h1>
+            <h1>{{article.title}}</h1>K
             <p>{{article.description}}</p>
             <span>Read more...</span>
         </router-link>
@@ -26,13 +26,13 @@
     import { Vue, Component, Prop } from 'vue-property-decorator';
     import { IArticle } from "@/module/types";
 
+
     @Component
     export default class ArticlePreview extends Vue {
         //
         @Prop() private article!: IArticle;
 
         get slug() {
-            console.log('child', this.article);
             return this.article.slug;
         }
     }
